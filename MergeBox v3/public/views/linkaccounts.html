@@ -1,0 +1,31 @@
+<script>
+    $(document).ready(function(){
+        $('.contact-box').each(function() {
+            animationHover(this, 'pulse');
+        });
+    });
+</script>
+<div ng-controller="LinkAccountsCtrl" class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <form ng-click="linkAccount('dropbox')">
+            <div class="col-xs-6 col-sm-3">
+                <div class="contact-box">
+                    <div class="col-sm-12">
+                        <img style=" max-width:100%;max-height:100%;" src="https://cf.dropboxstatic.com/static/images/brand/glyph@2x-vflJ1vxbq.png">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </form>
+        <form ng-click="linkAccount('google_drive')">
+            <div class="col-xs-6 col-sm-3">
+                <div class="contact-box">
+                    <div class="col-sm-12">
+                        <img style=" max-width:100%;max-height:100%;" src="https://lh6.ggpht.com/k7Z4J1IIXXJnC2NRnFfJNlkn7kZge4Zx-Yv5uqYf4222tx74wXDzW24OvOxlcpw0KcQ=w300">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

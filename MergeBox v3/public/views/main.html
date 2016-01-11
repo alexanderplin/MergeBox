@@ -1,0 +1,69 @@
+<div ng-controller="TableAccountsCtrl">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Table with data from $scope - <strong>(The angular way)</strong></h5>
+                        <div ibox-tools></div>
+                    </div>
+                    <div class="ibox-content">
+                        <p class="text-center" ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
+                        <!--<h1>{{data}}</h1>-->
+                        <table datatable="ng" class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Service</th>
+                                <th>Email</th>
+                                <th>Capacity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-index = "{{ account.index }}" ng-repeat="account in accounts" ng-class="{'active': active === true}" ng-click="active = !active">
+                                <td>{{ account.index }}</td>
+                                <td>{{ account.service_name }}</td>
+                                <td>{{ account.service_email }}</td>
+                                <td>{{ account.capacity }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button ng-click="showhide($event)" type="button" class="btn btn-primary">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Table with data from $scope - <strong>(The angular way)</strong></h5>
+                        <div ibox-tools></div>
+                    </div>
+                    <div class="ibox-content">
+                        <p class="text-center" ng-show="load"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
+                        <!--<h1>{{data}}</h1>-->
+                        <table datatable='ng' class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                            <tr>
+                                <th>Account ID </th>
+                                <th>Name</th>
+                                <th>Size</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-index = "{{ file.index }}" ng-repeat="file in files" ng-class="{'active': active === true}" ng-click="active = !active">
+                                    <td>{{ file.index }}</td>
+                                    <td>{{ file.name }}</td>
+                                    <td>{{ file.size }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
