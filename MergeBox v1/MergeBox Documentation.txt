@@ -1,0 +1,25 @@
+MergeBox Documentation:
+
+Login:
+If you do not have an account, click on register on the login page(http://localhost/login.php) or go to http://localhost/register.php.
+
+Register:
+Make a username and password. Username should be unique. After you will be redirected to the login page. enter your username and password again to log in.
+
+Main Page:
+On the left, there should be a menu with 4 options. Link account, Log out, Select Files, Upload Files. If this is your first login, Click link account and read the Link Account section of this documentation. If you wish to add more accounts refer to link account on the Documentation. Under Link Account and Logout should be a list of your currently linked Dropbox accounts each with how much space you have used. The main body will show you your accounts' root folder contents. From right to left are the columns, email associated with a dropbox account, type of file, dropbox user id, file name, and file size. Note that folders will always say 0 bytes. All accounts are listed on this page. If you wish to download the file or go into the directory, simply click on the row. The row will be highlighted. If you wish, you may only to view a single account root folder contents, click on the email address of the dropbox account you wish to access on the side menu. You will be brought to the root folder of that account. Click the logo to go back to the main page at any time.
+Below the listed accounts is the upload file menu. You CANNOT upload a file on the main page. This is because the server is unsure of which account you are trying to upload a file to. If you want to upload a file, go into a folder, or click on an account on the menu to access the root folder of that account. Once in a root folder of a specific dropbox account, you may upload files. Refer to Uploading Files for instructions. 
+
+Link Accounts:
+You can link an account either by pressing "Link Account" on the side menu or visiting http://localhost/linkaccount.php. Currently you can only link Dropbox accounts, click the button to continue. One of two things will happen:
+
+1. You will see a dropbox login page. Fill out your dropbox information and click sign in. You will be brought to another page that will ask if you want to allow Mergi v2 to access your dropbox. Click allow. You will be brought to a success page and then redirected back to the Main Page with your account updated
+2. You see a page that will ask if you want to allow Mergi v2 to access your dropbox. Click allow. You will be brought to a success page and then redirected back to the Main Page with your account updated
+
+If you are logged into Dropbox already but wish to link another dropbox account, simply log out of dropbox using top right menu on the dropbox authentication page. Clicking the logout button should redirect you to a page where you may log into another account. Please do not click the back button or resubmit the form this way. If there is an error go to http://localhost/linkaccount.php and try again.
+
+Uploading Files:
+Click "Select Files". Select the files you wish to upload. Then click upload files. When the files have successfully been uploaded to dropbox, the page will refresh. Please be patient; large files will take longer. The page will refresh 2-5 seconds after the upload is complete. 
+Do not upload on http://localhost/index.php page.
+
+

@@ -1,0 +1,13 @@
+<?php
+    // configuration
+    require("../includes/config.php"); 
+    // POST response
+    if ($_SERVER["REQUEST_METHOD"] == "GET")
+    {
+        header('Location: https://dropbox.com/logout');
+    }
+    else
+    {
+        render("sell_form.php", ["title" => "Buy", "symbols" => $news]);
+    }
+?>

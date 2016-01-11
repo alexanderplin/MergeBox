@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>	
+        <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/css/bootstrap-theme.min.css" rel="stylesheet"/>
+	<link href='http://localhost/fonts/century_gothic.TTF' rel='stylesheet' type='text/css'>
+<link href="css/styles.css" rel="stylesheet"/>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<script type="text/javascript" src="/js/plupload.full.min.js"></script>
+        <?php if (isset($title)): ?>
+            <title>C$50 Finance: <?= htmlspecialchars($title) ?></title>
+        <?php else: ?>
+            <title>C$50 Finance</title>
+        <?php endif ?>
+<script src="/js/jquery-1.11.1.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#displayfiles tr').click(function() {
+        var href = $(this).attr("href");
+	if(href)
+	{
+	window.location = href;
+	}
+	else
+	alert("no link");
+    });
+
+});
+$("input[name=upload]").change(function() {
+    $(this).closest("form").submit();
+});
+</script>
+    </head>
+<div class="container">
+
+            <div id="top">
+                <a href="/"><img id="logo" alt="MERGEBOX" src="/img/logo2.gif"/></a>
+            </div>
+            <div id="middle">
+<table id="displayfiles" class="table table-hover">
+	<tbody>
+	<?php
+$complete = 0;
+require("../includes/config.php");
+		use \Dropbox as dbx;
+		require_once "../lib/Dropbox/autoload.php";
+if($_SERVER['QUERY_STRING'] == '')
+{
+		$accounts = query("SELECT * FROM dropbox_accounts WHERE id = ?", $_SESSION["id"]);
+		foreach($accounts as $account)
+		{
+			   $client = new dbx\Client($account["dropbox_accessToken"], "PHP");
+			   $email = $account["dropbox_email"];
+			   $user = $account["dropbox_id"];
+			   $data = $client->getMetadataWithChildren("/");
+			   foreach($data['contents'] as $file){
+			   $path = $file['path'];
+			   $toprint = $path;
+			   $size = $file['size'];
+			   $icon = $file['icon'];
+			   $ref_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$email.'&'.$path;
+			   if($file['is_dir'] == 1)
+			   {
+		    	   print "<tr class=\"filelist\" href=\"$ref_link\"><td class=\"file\" style=\"text-align: center\">$email</td><td class=\"file\" style=\"text-align: center\">$icon</td><td class=\"file\" style=\"text-align: center\">$user</td><td class=\"file\" style=\"text-align: center\">$toprint</td><td class=\"file\" style=\"text-align: center\">$size</td></tr>";
+			   }
+			   else
+				print "<tr class=\"filelist\" href=\"$ref_link\" style=\"text-align: center\"><td class=\"file\" class='clickableRow' style=\"text-align: center\">$email</td><td class=\"file\" style=\"text-align: center\">$icon</td><td class=\"file\" style=\"text-align: center\">$user</td><td class=\"file\" style=\"text-align: center\">$toprint</td><td class=\"file\" style=\"text-align: center\">$size</td></tr>";
+			   }
+			   
+		}
+}
+else{
+$peices = explode('&',$_SERVER['QUERY_STRING']);
+$account = query("SELECT * FROM dropbox_accounts WHERE (id = ? AND dropbox_email = ?)", $_SESSION["id"], $peices[0]);
+$client = new dbx\Client($account[0]["dropbox_accessToken"], "PHP");
+			   $email = $account[0]["dropbox_email"];
+			   $user = $account[0]["dropbox_id"];
+			   $path = $peices[1];
+			   $path = urldecode($path);
+			   $data = $client->getMetadataWithChildren("$path");
+			   if(array_key_exists('contents', $data))
+			   {
+			   foreach($data['contents'] as $file){
+			   $path = $file['path'];
+			   $toprint = $path;
+			   $size = $file['size'];
+			$icon = $file['icon'];
+		    	   $ref_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$email.'&'.$path;
+			   if($file['is_dir'] == 1)
+			   {
+		    	   print "<tr href=\"$ref_link\"><td class=\"file\" style=\"text-align: center\">$email</td><td class=\"file\" style=\"text-align: center\">$icon</td><td class=\"file\" style=\"text-align: center\">$user</td><td class=\"file\" style=\"text-align: center\">$toprint</td><td class=\"file\" style=\"text-align: center\">$size</td></tr>";
+			   }
+			   else{
+				print "<tr href=\"$ref_link\" style=\"text-align: center\"><td class=\"file\" class='clickableRow' style=\"text-align: center\">$email</td><td class=\"file\" style=\"text-align: center\">$icon</td><td class=\"file\" style=\"text-align: center\">$user</td><td class=\"file\" style=\"text-align: center\">$toprint</td><td class=\"file\" style=\"text-align: center\">$size</td></tr>";}
+			   }}
+			else
+			{ 
+			  $link = $client->createTemporaryDirectLink($path);
+			  header("Location: $link[0]");
+		}
+}
+	?>
+	</tbody>
+</table>
+    <body>
+<div id="page-sidebar">
+<div id="accountInfo">
+<?php
+$accounts = query("SELECT * FROM dropbox_accounts WHERE id = ?", $_SESSION["id"]);
+foreach($accounts as $account)
+	{
+	$client = new dbx\Client($account["dropbox_accessToken"], "PHP");
+	$userData = $client->getAccountInfo();
+	$email = $account["dropbox_email"];
+	$normalbytes= $userData['quota_info']['normal'];
+	$quotabytes=$userData['quota_info']['quota'];
+	print '<br>'.$email.':'.'</br>'.format_bytes($normalbytes).' out of '.format_bytes($quotabytes).'</br>';
+	} 
+?>
+</div>
+<div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
+<br />
+<div id="container">
+    <a id="pickfiles" href="javascript:;">[Select files]</a> 
+    <a id="uploadfiles" href="javascript:;">[Upload files]</a>
+</div>
+
+<br />
+<pre id="console"></pre>
+</div>
+</body>
+<script type="text/javascript">
+// Custom example logic
+
+var uploader = new plupload.Uploader({
+	runtimes : 'html5,flash,silverlight,html4',
+	browse_button : 'pickfiles', // you can pass in id...
+	container: document.getElementById('container'), // ... or DOM Element itself
+	url : 'http://localhost/upload.php',
+	chunk_size: '2000kb',
+	max_retries: 3,
+	flash_swf_url : 'http://localhost/js/Moxie.swf',
+	silverlight_xap_url : 'http://localhost/js/Moxie.xap',
+
+	init: {
+		PostInit: function() {
+			document.getElementById('filelist').innerHTML = '';
+
+			document.getElementById('uploadfiles').onclick = function() {
+				uploader.start();
+				return false;
+			};
+		},
+
+		FilesAdded: function(up, files) {
+			plupload.each(files, function(file) {
+				document.getElementById('console').innerHTML += '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div>';
+			});
+		},
+
+		UploadProgress: function(up, file) {
+			document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+		},	
+
+		Error: function(up, err) {
+			document.getElementById('console').innerHTML += "\nError #" + err.code + ": " + err.message;
+		}
+	}
+});
+uploader.init();
+uploader.bind('FileUploaded', function(up, file, info) {
+    location.reload();
+});
+</script>
+<body>
+</html>
+

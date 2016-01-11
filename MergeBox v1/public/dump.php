@@ -1,0 +1,30 @@
+<?php
+    // configuration
+    require("../includes/config.php"); 
+    // if form was submitted
+    use Dropbox as dbx;
+    #dumps the access code and user id of user to mysql table
+    if ($_SERVER["REQUEST_METHOD"] == "GET")
+    {
+	require_once "../lib/Dropbox/autoload.php";
+	function getWebAuth()
+	{
+	    $appInfo = dbx\AppInfo::loadFromJsonFile("../lib/Dropbox/app-info.json");
+	    $clientIdentifier = "my-app/1.0";
+            $redirectUri = "http://localhost/dump.php";
+            $csrfTokenStore = new dbx\ArrayEntryStore($_SESSION, 'dropbox-auth-csrf-token');
+            return new dbx\WebAuth($appInfo, $clientIdentifier, $redirectUri, $csrfTokenStore, "en");
+	}
+	#finishes authentication with access code and user id
+	list($accessToken, $userId) = getWebAuth()->finish($_GET);
+	#generates a client object which we can grab information with by calling getAccountInfo()
+        $client = new dbx\Client($accessToken, "PHP");
+	$accountInfo = $client->getAccountInfo();
+	$email = $accountInfo['email'];
+	#input acess information to mysql table.
+	query("INSERT INTO dropbox_accounts (dropbox_email, dropbox_id, dropbox_accessToken, id) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE dropbox_accessToken = ?", $email, $userId, $accessToken, $_SESSION["id"], $accessToken);
+    }
+    
+
+render("temp_form.php", ["title" => "succcessss"]);
+?>

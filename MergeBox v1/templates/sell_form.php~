@@ -1,0 +1,19 @@
+<form action="sell.php" method="post">
+    <fieldset>
+        <div class="control-group">
+            <select class="form-control" name="symb">
+                <option value=""></option>
+                <?php               
+	                foreach ($symbols as $symbol)	
+                    {   
+                        echo("<option value='$symbol[symbol]'>" . $symbol[symbol] . "</option>");
+                    }
+                ?>
+            </select>
+	    <input class="form-control" name="symbl" placeholder="# to sell" type="text"/>
+        </div>
+        <div class="control-group">
+            <button type="submit" class="btn btn-default">Sell Stock</button>
+        </div>
+    </fieldset>
+</form>

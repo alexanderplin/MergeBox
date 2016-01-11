@@ -1,0 +1,25 @@
+<p>
+    Your current deposit: <strong>$<?=number_format($cash, 2)?></strong>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="text-align: center">Symbol</th>
+            <th style="text-align: center">Name</th>
+            <th style="text-align: center">Shares</th>
+            <th style="text-align: center">Price</th>
+            <th style="text-align: center">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($shares as $share): ?>
+            <tr>
+                <td><?= $share["symbol"] ?></td>
+                <td><?= $share["name"] ?></td>
+                <td><?= $share["shares"] ?></td>
+                <td><?= number_format($share["price"], 2) ?></td>
+                <td><?= number_format($share["total"], 2) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

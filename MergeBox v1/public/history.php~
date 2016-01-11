@@ -1,0 +1,14 @@
+<?php
+    // configuration
+    require("../includes/config.php");
+    
+    // gets current user shares and order them
+    $history = query("SELECT type, symbol, shares, price, date FROM history WHERE user_id = ? order by date desc", $_SESSION["id"]);
+    
+    if (count($rows) == 0)
+    {
+        apologize("No recorded transactions for this user exist.");
+    }
+    // render history
+    render("history_list.php", ["title" => "History", "historylist" => $history]);
+?>

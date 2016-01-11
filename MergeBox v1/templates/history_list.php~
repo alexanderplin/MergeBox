@@ -1,0 +1,30 @@
+<ul class="nav nav-pills">
+    <li><a href="index.php">Portfolio</a></li>
+    <li><a href="quote.php">Quote</a></li>
+    <li><a href="buy.php">Buy</a></li>
+    <li><a href="sell.php">Sell</a></li>
+    <li><a href="history.php">History</a></li>  
+    <li><a href="logout.php"><strong>Log Out</strong></a></li>
+</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="text-align: center">Type</th>
+            <th style="text-align: center">Symbol</th>
+            <th style="text-align: center">Shares</th>
+            <th style="text-align: center">Price</th>
+            <th style="text-align: center">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($historylist as $record): ?>
+            <tr>
+                <td><?= $record["type"] ?></td>
+                <td><?= $record["symbol"] ?></td>
+                <td><?= $record["shares"] ?></td>
+                <td><?= number_format($record["price"], 2) ?></td>
+                <td><?= date('Y-m-d H:i:s', strtotime($record["date"])) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

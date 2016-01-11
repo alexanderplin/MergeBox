@@ -1,0 +1,82 @@
+/**
+ * styles.css
+ *
+ * Computer Science 50
+ * Problem Set 7
+ *
+ * Global CSS.
+ */
+
+#console
+{
+width:200px;
+position:fixed;
+}
+.container
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#middle .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+#middle{
+font-family: 'Muli';
+}
+#bottom
+{
+    /* shrink bottom's font size */
+    font-size: smaller;
+
+    /* surround with whitespace */
+    margin: 20px;
+text-align:center;
+}
+#page-sidebar{
+position:fixed;
+top:120px;
+width:220px;
+padding-right:50px;
+padding-right:30px;
+margin-left:25px;
+right:1070px;
+}
+.sidebutton{list-style-type: none;}
+a.emaillink{
+text-decoration: none;
+color:#C00000;
+}
+.table.table-hover{
+width:78%;
+float:right;
+margin-right:50px;}
+body{font-family:'Muli';}
+.file{
+padding:10px 2px 9px !important;}
+.sidebutton{
+padding:10px;
+}
+
+#pickfiles{
+display:inline;
+position:fixed;
+}
+#uploadfiles{
+display:inline;
+position:fixed;
+padding-left:110px;
+}
+#container{float:left;}
+#top{padding-top:5px;
+padding-bottom:5px;}
+#linkaccount{float:left;}
+#logout{float:right;}
+#message .pre{text-align:center;}

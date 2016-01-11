@@ -1,0 +1,31 @@
+<?php
+    // configuration
+    require("../includes/config.php"); 
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        // make sure symbol is not empty
+        if (empty($_POST["symb"]))
+        {
+            apologize("Please enter the stock symbol.");
+        }
+        
+        // lookup the stock
+        $stock = lookup($_POST["symb"]);
+        
+        // check if valid stock
+        if ($stock === false)
+        {
+            apologize("Stock Not Found");
+        }
+        else
+        {
+            // Render the result form
+            render("quote_result.php", ["title" => "Quote", "symbol" => $stock["symbol"], "name" => $stock["name"], "price" => $stock["price"]]);
+        }
+    }
+    else
+    {
+        // else render form
+        render("quote_form.php", ["title" => "Quote"]);
+    }
+?>
